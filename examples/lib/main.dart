@@ -28,15 +28,24 @@ void main() {
       "btn-text-white": ButtonStyle(
         foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
       ),
+      "btn-text-red": ButtonStyle(
+        foregroundColor: MaterialStateProperty.all<Color>(Colors.red),
+      ),
       "btn-elevation-10": ButtonStyle(
-        elevation: MaterialStateProperty.all<double>(10),
+        elevation: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.pressed)) {
+            return 4;
+          }
+
+          return 1;
+        }),
       ),
       "tf-a": const TextField(
         readOnly: true,
       ),
       "px-2": const TextField(
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(20),
+          contentPadding: EdgeInsets.symmetric(horizontal: 20),
         ),
       ),
       "px-4": const TextField(
@@ -72,20 +81,17 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const Text(
-            "Desire",
-            style: TextStyle(
-              color: Colors.red,
-            ),
-          ).desire("font-medium text-xl text-blue-400 text-center"),
+          const Text("Desire")
+              .desire("font-medium text-xl text-blue-400 text-center"),
           const SelectableText("Selectable Desire")
               .desire("font-medium text-xl text-blue-400"),
-          ElevatedButton(
+          OutlinedButton.icon(
+            icon: const Icon(Icons.ac_unit),
             onPressed: () {},
-            child: const Text("Hello World"),
-          ).desire("btn-text-white btn-bg-blue btn-elevation-10"),
+            label: const Text("Hi"),
+          ).desire("btn-text-red"),
           const TextField().desire("px-2"),
-          TextFormField().desire("px-2 px-4")
+          TextFormField().desire("px-2"),
         ],
       ).desire("justify-center items-center"),
     );
