@@ -3,13 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:desire/desire.dart';
 
 void main() {
-  runApp(const DesireProvider(
+  runApp(DesireProvider(
     child: MyApp(),
     desires: {
-      "font-medium": TextStyle(fontWeight: FontWeight.w500),
-      "text-xl": TextStyle(fontSize: 28),
-      "text-blue": TextStyle(color: Colors.blue),
-      "text-center": Text("", textAlign: TextAlign.center)
+      "font-medium": const TextStyle(fontWeight: FontWeight.w500),
+      "text-xl": const TextStyle(fontSize: 28),
+      "text-blue": const TextStyle(color: Colors.blue),
+      "text-center": const Text("", textAlign: TextAlign.center),
+      "justify-center": Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+      ),
+      "items-center": Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+      ),
     },
   ));
 }
@@ -36,8 +42,6 @@ class HomePage extends StatelessWidget {
   build(context) {
     return Scaffold(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Text(
             "Desire",
@@ -48,7 +52,7 @@ class HomePage extends StatelessWidget {
           const SelectableText("Selectable Desire")
               .desire("font-medium text-xl text-blue"),
         ],
-      ),
+      ).desire("justify-center items-center"),
     );
   }
 }
