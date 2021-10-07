@@ -34,6 +34,17 @@ void main() {
       "tf-a": const TextField(
         readOnly: true,
       ),
+      "px-2": const TextField(
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(20),
+        ),
+      ),
+      "px-4": const TextField(
+        decoration: InputDecoration(
+          labelText: "Hi",
+          floatingLabelBehavior: FloatingLabelBehavior.never,
+        ),
+      ),
     },
   ));
 }
@@ -73,7 +84,8 @@ class HomePage extends StatelessWidget {
             onPressed: () {},
             child: const Text("Hello World"),
           ).desire("btn-text-white btn-bg-blue btn-elevation-10"),
-          const TextField()
+          const TextField().desire("px-2"),
+          TextFormField().desire("px-2 px-4")
         ],
       ).desire("justify-center items-center"),
     );
