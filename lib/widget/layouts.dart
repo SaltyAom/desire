@@ -19,7 +19,7 @@ List<Row> toRows(List<Object?> widgets) =>
     }).toList();
 
 extension DesireColumn on Column {
-  desire(String desires) {
+  Builder desire(String desires) {
     getDesire(BuildContext context) {
       final provider = DesireProvider.of(context);
 
@@ -54,7 +54,7 @@ extension DesireColumn on Column {
 }
 
 extension DesireRow on Row {
-  desire(String desires) {
+  Builder desire(String desires) {
     getDesire(BuildContext context) {
       final provider = DesireProvider.of(context);
 
@@ -89,7 +89,7 @@ extension DesireRow on Row {
 }
 
 extension DesireStack on Stack {
-  desire(String desires) {
+  Builder desire(String desires) {
     getDesire(BuildContext context) {
       final provider = DesireProvider.of(context);
 

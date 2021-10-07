@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../core.dart';
 
 extension DesireText on Text {
-  desire(String desires) {
+  Builder desire(String desires) {
     getDesire(BuildContext context) {
       final provider = DesireProvider.of(context);
 
@@ -52,7 +52,7 @@ extension DesireText on Text {
 }
 
 extension DesireSelectableText on SelectableText {
-  desire(String desires) {
+  Builder desire(String desires) {
     getDesire(BuildContext context) {
       final provider = DesireProvider.of(context);
 

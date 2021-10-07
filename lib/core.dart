@@ -5,7 +5,7 @@ class DesireProvider extends InheritedWidget {
 
   // ignore: use_key_in_widget_constructors
   const DesireProvider({
-    required child,
+    required Widget child,
     required this.desires,
   }) : super(child: child);
 
