@@ -30,7 +30,10 @@ void main() {
       ),
       "btn-elevation-10": ButtonStyle(
         elevation: MaterialStateProperty.all<double>(10),
-      )
+      ),
+      "tf-a": const TextField(
+        readOnly: true,
+      ),
     },
   ));
 }
@@ -69,7 +72,8 @@ class HomePage extends StatelessWidget {
           ElevatedButton(
             onPressed: () {},
             child: const Text("Hello World"),
-          ).desire("btn-text-white btn-bg-blue btn-elevation-10")
+          ).desire("btn-text-white btn-bg-blue btn-elevation-10"),
+          const TextField()
         ],
       ).desire("justify-center items-center"),
     );
