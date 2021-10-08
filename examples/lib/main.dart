@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:desire/desire.dart';
 
+final a = (Widget child, BuildContext context, Object? a) {
+  return SizedBox(child: child);
+};
+
 void main() {
   runApp(DesireProvider(
     child: const MyApp(),
@@ -54,10 +58,16 @@ void main() {
           floatingLabelBehavior: FloatingLabelBehavior.never,
         ),
       ),
-      "a": (BuildContext context) => Image(
+      "a": (context) => Image(
             image: const NetworkImage(""),
             width: MediaQuery.of(context).size.width / 2,
-          )
+          ),
+      "d-a": desirable(
+        (child, context) => ClipRRect(
+          child: child,
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+        ),
+      ),
     },
   ));
 }
@@ -99,19 +109,10 @@ class HomePage extends StatelessWidget {
           ).desire("px-2 text-blue-400"),
           Image.network(
             "https://user-images.githubusercontent.com/35027979/133552450-0dd6e24e-6c80-4658-be9b-72fd8308efbd.png",
-          ).desirable()
-            ..wrap(
-              (child) => SizedBox(
-                child: child,
-                width: 300,
-              ),
-            )
-            ..wrap(
-              (child) => ClipRRect(
-                child: child,
-                borderRadius: BorderRadius.circular(8),
-              ),
-            )
+          ) //
+              .desire("a")
+              .desirable(context)
+              .desire("d-a")
         ],
       ).desire("justify-center items-center"),
     );
