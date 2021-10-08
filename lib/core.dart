@@ -34,3 +34,5 @@ typedef DesireBuilder<T extends Widget> = T Function(BuildContext context);
 List<T> mapDesireBuilder<T extends Widget>(
         Iterable<Object?> desirable, BuildContext context) =>
     desirable.whereType<DesireBuilder<T>>().map((e) => e(context)).toList();
+
+abstract class DesireMap {}

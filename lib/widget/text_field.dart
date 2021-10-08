@@ -6,8 +6,7 @@ import 'package:flutter/services.dart';
 
 import '../core.dart';
 
-InputDecoration _mergeInputDecoration(InputDecoration d1, InputDecoration d2) {
-  return InputDecoration(
+InputDecoration _mergeInputDecoration(InputDecoration d1, InputDecoration d2) => InputDecoration(
     icon: d2.icon ?? d1.icon,
     label: d2.label ?? d1.label,
     labelText: d2.labelText ?? d1.labelText,
@@ -65,32 +64,162 @@ InputDecoration _mergeInputDecoration(InputDecoration d1, InputDecoration d2) {
     alignLabelWithHint: d2.alignLabelWithHint ?? d1.alignLabelWithHint,
     constraints: d2.constraints ?? d1.constraints,
   );
-}
 
 extension DesireTextField on TextField {
-  Builder desire(String desires) {
-    getDesire(BuildContext context) {
-      final provider = DesireProvider.of(context);
+  TextField desire(List desirable) {
+    final desires = [
+      TextField(
+              style: style ?? const TextStyle(),
+              decoration: decoration ?? const InputDecoration(),
+            ),
+      ...desirable
+    ]
+        .map((e) {
+          if (e is TextField) return e;
+          if (e is TextStyle) return TextField(style: e);
+          if (e is InputDecoration) return TextField(decoration: e);
 
-      final desirable = desires.split(" ").map((desire) => provider[desire]);
-      final styles = [
-        this,
-        if (style == null) const TextField(style: TextStyle()),
-        ...desirable.whereType<TextField>(),
-        ...desirable
-            .whereType<TextStyle>()
-            .map((style) => TextField(style: style)),
-        ...mapDesireBuilder<TextField>(desirable, context),
-      ].toList();
+          return null;
+        })
+        .whereType<TextField>()
+        .toList();
 
-      return styles;
-    }
+    return TextField(
+      controller: controller,
+      focusNode: mapDesire<FocusNode, TextField>(desires, (e) => e.focusNode),
+      decoration: desires
+          .map((e) => e.decoration)
+          .whereType<InputDecoration>()
+          .reduce((acc, e) => _mergeInputDecoration(acc, e)),
+      keyboardType:
+          mapDesire<TextInputType, TextField>(desires, (e) => e.keyboardType),
+      textInputAction: mapDesire<TextInputAction, TextField>(
+          desires, (e) => e.textInputAction),
+      textCapitalization: mapDesire<TextCapitalization, TextField>(
+          desires, (e) => e.textCapitalization, TextCapitalization.none)!,
+      style: desires
+          .map((e) => e.style)
+          .whereType<TextStyle>()
+          .reduce((acc, e) => acc.merge(e)),
+      textAlign: mapDesire<TextAlign, TextField>(
+          desires, (e) => e.textAlign, TextAlign.start)!,
+      textAlignVertical: mapDesire<TextAlignVertical, TextField>(
+          desires, (e) => e.textAlignVertical),
+      textDirection:
+          mapDesire<TextDirection, TextField>(desires, (e) => e.textDirection),
+      readOnly: mapDesire<bool, TextField>(desires, (e) => e.readOnly, false)!,
+      toolbarOptions: mapDesire<ToolbarOptions, TextField>(
+          desires, (e) => e.toolbarOptions),
+      showCursor: mapDesire<bool, TextField>(desires, (e) => e.showCursor),
+      autofocus:
+          mapDesire<bool, TextField>(desires, (e) => e.autofocus, false)!,
+      obscuringCharacter: mapDesire<String, TextField>(
+          desires, (e) => e.obscuringCharacter, '•')!,
+      obscureText:
+          mapDesire<bool, TextField>(desires, (e) => e.obscureText, false)!,
+      autocorrect:
+          mapDesire<bool, TextField>(desires, (e) => e.autocorrect, true)!,
+      smartDashesType: mapDesire<SmartDashesType, TextField>(
+          desires, (e) => e.smartDashesType),
+      smartQuotesType: mapDesire<SmartQuotesType, TextField>(
+          desires, (e) => e.smartQuotesType),
+      enableSuggestions: mapDesire<bool, TextField>(
+          desires, (e) => e.enableSuggestions, true)!,
+      maxLines: mapDesire<int, TextField>(desires, (e) => e.maxLines, 1)!,
+      minLines: mapDesire<int, TextField>(desires, (e) => e.minLines),
+      expands: mapDesire<bool, TextField>(desires, (e) => e.expands, false)!,
+      maxLength: mapDesire<int, TextField>(desires, (e) => e.maxLength),
+      maxLengthEnforcement: mapDesire<MaxLengthEnforcement, TextField>(
+          desires, (e) => e.maxLengthEnforcement),
+      onChanged: onChanged,
+      onEditingComplete: onEditingComplete,
+      onSubmitted: onSubmitted,
+      onAppPrivateCommand: onAppPrivateCommand,
+      inputFormatters: desires
+          .map((e) => e.inputFormatters)
+          .whereType<List<TextInputFormatter>>()
+          .expand((e) => e)
+          .toList(),
+      enabled: mapDesire<bool, TextField>(desires, (e) => e.enabled),
+      cursorWidth:
+          mapDesire<double, TextField>(desires, (e) => e.cursorWidth, 2.0)!,
+      cursorHeight:
+          mapDesire<double, TextField>(desires, (e) => e.cursorHeight),
+      cursorRadius:
+          mapDesire<Radius, TextField>(desires, (e) => e.cursorRadius),
+      cursorColor: mapDesire<Color, TextField>(desires, (e) => e.cursorColor),
+      selectionHeightStyle: mapDesire<BoxHeightStyle, TextField>(
+          desires, (e) => e.selectionHeightStyle, BoxHeightStyle.tight)!,
+      selectionWidthStyle: mapDesire<BoxWidthStyle, TextField>(
+          desires, (e) => e.selectionWidthStyle, BoxWidthStyle.tight)!,
+      keyboardAppearance: mapDesire<Brightness, TextField>(
+          desires, (e) => e.keyboardAppearance),
+      scrollPadding: mapDesire<EdgeInsets, TextField>(
+          desires, (e) => e.scrollPadding, const EdgeInsets.all(20))!,
+      dragStartBehavior: mapDesire<DragStartBehavior, TextField>(
+          desires, (e) => e.dragStartBehavior, DragStartBehavior.start)!,
+      enableInteractiveSelection: mapDesire<bool, TextField>(
+          desires, (e) => e.enableInteractiveSelection, true)!,
+      selectionControls: mapDesire<TextSelectionControls, TextField>(
+          desires, (e) => e.selectionControls),
+      onTap: onTap,
+      mouseCursor:
+          mapDesire<MouseCursor, TextField>(desires, (e) => e.mouseCursor),
+      buildCounter: mapDesire<
+          Widget? Function(
+        BuildContext, {
+        required int currentLength,
+        required bool isFocused,
+        required int? maxLength,
+      }),
+          TextField>(desires, (e) => e.buildCounter),
+      scrollController: scrollController,
+      scrollPhysics:
+          mapDesire<ScrollPhysics, TextField>(desires, (e) => e.scrollPhysics),
+      autofillHints: autofillHints,
+      restorationId: restorationId,
+      enableIMEPersonalizedLearning: mapDesire<bool, TextField>(
+          desires, (e) => e.enableIMEPersonalizedLearning, true)!,
+    );
+  }
+}
 
-    return Builder(builder: (context) {
-      final desires = getDesire(context);
+extension DesireTextFormField on TextFormField {
+  TextFormField desire(
+    List desirable, {
+    ValueChanged<String>? onChanged,
+    GestureTapCallback? onTap,
+    VoidCallback? onEditingComplete,
+    ValueChanged<String>? onFieldSubmitted,
+    FormFieldSetter<String>? onSaved,
+    TextStyle? style,
+    InputDecoration? decoration,
+    ScrollController? scrollController,
+    Iterable<String>? autofillHints,
+  }) {
+    final desires = [
+      TextField(
+              style: style ?? const TextStyle(),
+              decoration: decoration ?? const InputDecoration(),
+            ),
+      ...desirable
+    ]
+        .map((e) {
+          if (e is TextField) return e;
+          if (e is TextStyle) return TextField(style: e);
+          if (e is InputDecoration) return TextField(decoration: e);
 
-      return TextField(
+          return null;
+        })
+        .whereType<TextField>()
+        .toList();
+
+    return TextFormField(
+        key: key,
         controller: controller,
+        initialValue: initialValue,
+        scrollController: scrollController,
+        autofillHints: autofillHints,
         focusNode: mapDesire<FocusNode, TextField>(desires, (e) => e.focusNode),
         decoration: desires
             .map((e) => e.decoration)
@@ -114,63 +243,32 @@ extension DesireTextField on TextField {
             desires, (e) => e.textDirection),
         readOnly:
             mapDesire<bool, TextField>(desires, (e) => e.readOnly, false)!,
-        toolbarOptions: mapDesire<ToolbarOptions, TextField>(
-            desires, (e) => e.toolbarOptions),
+        toolbarOptions:
+            mapDesire<ToolbarOptions, TextField>(desires, (e) => e.toolbarOptions),
         showCursor: mapDesire<bool, TextField>(desires, (e) => e.showCursor),
-        autofocus:
-            mapDesire<bool, TextField>(desires, (e) => e.autofocus, false)!,
-        obscuringCharacter: mapDesire<String, TextField>(
-            desires, (e) => e.obscuringCharacter, '•')!,
-        obscureText:
-            mapDesire<bool, TextField>(desires, (e) => e.obscureText, false)!,
-        autocorrect:
-            mapDesire<bool, TextField>(desires, (e) => e.autocorrect, true)!,
-        smartDashesType: mapDesire<SmartDashesType, TextField>(
-            desires, (e) => e.smartDashesType),
-        smartQuotesType: mapDesire<SmartQuotesType, TextField>(
-            desires, (e) => e.smartQuotesType),
-        enableSuggestions: mapDesire<bool, TextField>(
-            desires, (e) => e.enableSuggestions, true)!,
+        autofocus: mapDesire<bool, TextField>(desires, (e) => e.autofocus, false)!,
+        obscuringCharacter: mapDesire<String, TextField>(desires, (e) => e.obscuringCharacter, '•')!,
+        obscureText: mapDesire<bool, TextField>(desires, (e) => e.obscureText, false)!,
+        autocorrect: mapDesire<bool, TextField>(desires, (e) => e.autocorrect, true)!,
+        smartDashesType: mapDesire<SmartDashesType, TextField>(desires, (e) => e.smartDashesType),
+        smartQuotesType: mapDesire<SmartQuotesType, TextField>(desires, (e) => e.smartQuotesType),
+        enableSuggestions: mapDesire<bool, TextField>(desires, (e) => e.enableSuggestions, true)!,
         maxLines: mapDesire<int, TextField>(desires, (e) => e.maxLines, 1)!,
         minLines: mapDesire<int, TextField>(desires, (e) => e.minLines),
         expands: mapDesire<bool, TextField>(desires, (e) => e.expands, false)!,
         maxLength: mapDesire<int, TextField>(desires, (e) => e.maxLength),
-        maxLengthEnforcement: mapDesire<MaxLengthEnforcement, TextField>(
-            desires, (e) => e.maxLengthEnforcement),
-        onChanged: onChanged,
-        onEditingComplete: onEditingComplete,
-        onSubmitted: onSubmitted,
-        onAppPrivateCommand: onAppPrivateCommand,
-        inputFormatters: desires
-            .map((e) => e.inputFormatters)
-            .whereType<List<TextInputFormatter>>()
-            .expand((e) => e)
-            .toList(),
+        maxLengthEnforcement: mapDesire<MaxLengthEnforcement, TextField>(desires, (e) => e.maxLengthEnforcement),
+        onSaved: onSaved,
+        inputFormatters: desires.map((e) => e.inputFormatters).whereType<List<TextInputFormatter>>().expand((e) => e).toList(),
         enabled: mapDesire<bool, TextField>(desires, (e) => e.enabled),
-        cursorWidth:
-            mapDesire<double, TextField>(desires, (e) => e.cursorWidth, 2.0)!,
-        cursorHeight:
-            mapDesire<double, TextField>(desires, (e) => e.cursorHeight),
-        cursorRadius:
-            mapDesire<Radius, TextField>(desires, (e) => e.cursorRadius),
+        cursorWidth: mapDesire<double, TextField>(desires, (e) => e.cursorWidth, 2.0)!,
+        cursorHeight: mapDesire<double, TextField>(desires, (e) => e.cursorHeight),
+        cursorRadius: mapDesire<Radius, TextField>(desires, (e) => e.cursorRadius),
         cursorColor: mapDesire<Color, TextField>(desires, (e) => e.cursorColor),
-        selectionHeightStyle: mapDesire<BoxHeightStyle, TextField>(
-            desires, (e) => e.selectionHeightStyle, BoxHeightStyle.tight)!,
-        selectionWidthStyle: mapDesire<BoxWidthStyle, TextField>(
-            desires, (e) => e.selectionWidthStyle, BoxWidthStyle.tight)!,
-        keyboardAppearance: mapDesire<Brightness, TextField>(
-            desires, (e) => e.keyboardAppearance),
-        scrollPadding: mapDesire<EdgeInsets, TextField>(
-            desires, (e) => e.scrollPadding, const EdgeInsets.all(20))!,
-        dragStartBehavior: mapDesire<DragStartBehavior, TextField>(
-            desires, (e) => e.dragStartBehavior, DragStartBehavior.start)!,
-        enableInteractiveSelection: mapDesire<bool, TextField>(
-            desires, (e) => e.enableInteractiveSelection, true)!,
-        selectionControls: mapDesire<TextSelectionControls, TextField>(
-            desires, (e) => e.selectionControls),
-        onTap: onTap,
-        mouseCursor:
-            mapDesire<MouseCursor, TextField>(desires, (e) => e.mouseCursor),
+        keyboardAppearance: mapDesire<Brightness, TextField>(desires, (e) => e.keyboardAppearance),
+        scrollPadding: mapDesire<EdgeInsets, TextField>(desires, (e) => e.scrollPadding, const EdgeInsets.all(20))!,
+        enableInteractiveSelection: mapDesire<bool, TextField>(desires, (e) => e.enableInteractiveSelection, true)!,
+        selectionControls: mapDesire<TextSelectionControls, TextField>(desires, (e) => e.selectionControls),
         buildCounter: mapDesire<
             Widget? Function(
           BuildContext, {
@@ -179,125 +277,14 @@ extension DesireTextField on TextField {
           required int? maxLength,
         }),
             TextField>(desires, (e) => e.buildCounter),
-        scrollController: scrollController,
-        scrollPhysics: mapDesire<ScrollPhysics, TextField>(
-            desires, (e) => e.scrollPhysics),
-        autofillHints: autofillHints,
+        scrollPhysics: mapDesire<ScrollPhysics, TextField>(desires, (e) => e.scrollPhysics),
         restorationId: restorationId,
-        enableIMEPersonalizedLearning: mapDesire<bool, TextField>(
-            desires, (e) => e.enableIMEPersonalizedLearning, true)!,
-      );
-    });
-  }
-}
-
-extension DesireTextFormField on TextFormField {
-  Builder desire(
-    String desires, {
-    ValueChanged<String>? onChanged,
-    GestureTapCallback? onTap,
-    VoidCallback? onEditingComplete,
-    ValueChanged<String>? onFieldSubmitted,
-    FormFieldSetter<String>? onSaved,
-    TextStyle? style,
-    InputDecoration? decoration,
-    ScrollController? scrollController,
-    Iterable<String>? autofillHints,
-  }) {
-    getDesire(BuildContext context) {
-      final provider = DesireProvider.of(context);
-
-      final desirable = desires.split(" ").map((desire) => provider[desire]);
-      final styles = [
-        TextField(
-          style: style ?? const TextStyle(),
-          decoration: decoration ?? const InputDecoration(),
-        ),
-        ...desirable.whereType<TextField>(),
-        ...desirable
-            .whereType<TextStyle>()
-            .map((style) => TextField(style: style)),
-        ...mapDesireBuilder<TextField>(desirable, context),
-      ].toList();
-
-      return styles;
-    }
-
-    return Builder(builder: (context) {
-      final desires = getDesire(context);
-
-      return TextFormField(
-          key: key,
-          controller: controller,
-          initialValue: initialValue,
-          scrollController: scrollController,
-          autofillHints: autofillHints,
-          focusNode:
-              mapDesire<FocusNode, TextField>(desires, (e) => e.focusNode),
-          decoration: desires
-              .map((e) => e.decoration)
-              .whereType<InputDecoration>()
-              .reduce((acc, e) => _mergeInputDecoration(acc, e)),
-          keyboardType: mapDesire<TextInputType, TextField>(
-              desires, (e) => e.keyboardType),
-          textInputAction: mapDesire<TextInputAction, TextField>(
-              desires, (e) => e.textInputAction),
-          textCapitalization: mapDesire<TextCapitalization, TextField>(
-              desires, (e) => e.textCapitalization, TextCapitalization.none)!,
-          style: desires
-              .map((e) => e.style)
-              .whereType<TextStyle>()
-              .reduce((acc, e) => acc.merge(e)),
-          textAlign: mapDesire<TextAlign, TextField>(
-              desires, (e) => e.textAlign, TextAlign.start)!,
-          textAlignVertical: mapDesire<TextAlignVertical, TextField>(
-              desires, (e) => e.textAlignVertical),
-          textDirection: mapDesire<TextDirection, TextField>(
-              desires, (e) => e.textDirection),
-          readOnly:
-              mapDesire<bool, TextField>(desires, (e) => e.readOnly, false)!,
-          toolbarOptions: mapDesire<ToolbarOptions, TextField>(desires, (e) => e.toolbarOptions),
-          showCursor: mapDesire<bool, TextField>(desires, (e) => e.showCursor),
-          autofocus: mapDesire<bool, TextField>(desires, (e) => e.autofocus, false)!,
-          obscuringCharacter: mapDesire<String, TextField>(desires, (e) => e.obscuringCharacter, '•')!,
-          obscureText: mapDesire<bool, TextField>(desires, (e) => e.obscureText, false)!,
-          autocorrect: mapDesire<bool, TextField>(desires, (e) => e.autocorrect, true)!,
-          smartDashesType: mapDesire<SmartDashesType, TextField>(desires, (e) => e.smartDashesType),
-          smartQuotesType: mapDesire<SmartQuotesType, TextField>(desires, (e) => e.smartQuotesType),
-          enableSuggestions: mapDesire<bool, TextField>(desires, (e) => e.enableSuggestions, true)!,
-          maxLines: mapDesire<int, TextField>(desires, (e) => e.maxLines, 1)!,
-          minLines: mapDesire<int, TextField>(desires, (e) => e.minLines),
-          expands: mapDesire<bool, TextField>(desires, (e) => e.expands, false)!,
-          maxLength: mapDesire<int, TextField>(desires, (e) => e.maxLength),
-          maxLengthEnforcement: mapDesire<MaxLengthEnforcement, TextField>(desires, (e) => e.maxLengthEnforcement),
-          onSaved: onSaved,
-          inputFormatters: desires.map((e) => e.inputFormatters).whereType<List<TextInputFormatter>>().expand((e) => e).toList(),
-          enabled: mapDesire<bool, TextField>(desires, (e) => e.enabled),
-          cursorWidth: mapDesire<double, TextField>(desires, (e) => e.cursorWidth, 2.0)!,
-          cursorHeight: mapDesire<double, TextField>(desires, (e) => e.cursorHeight),
-          cursorRadius: mapDesire<Radius, TextField>(desires, (e) => e.cursorRadius),
-          cursorColor: mapDesire<Color, TextField>(desires, (e) => e.cursorColor),
-          keyboardAppearance: mapDesire<Brightness, TextField>(desires, (e) => e.keyboardAppearance),
-          scrollPadding: mapDesire<EdgeInsets, TextField>(desires, (e) => e.scrollPadding, const EdgeInsets.all(20))!,
-          enableInteractiveSelection: mapDesire<bool, TextField>(desires, (e) => e.enableInteractiveSelection, true)!,
-          selectionControls: mapDesire<TextSelectionControls, TextField>(desires, (e) => e.selectionControls),
-          buildCounter: mapDesire<
-              Widget? Function(
-            BuildContext, {
-            required int currentLength,
-            required bool isFocused,
-            required int? maxLength,
-          }),
-              TextField>(desires, (e) => e.buildCounter),
-          scrollPhysics: mapDesire<ScrollPhysics, TextField>(desires, (e) => e.scrollPhysics),
-          restorationId: restorationId,
-          enableIMEPersonalizedLearning: mapDesire<bool, TextField>(desires, (e) => e.enableIMEPersonalizedLearning, true)!,
-          validator: validator,
-          autovalidateMode: autovalidateMode,
-          onChanged: onChanged,
-          onEditingComplete: onEditingComplete,
-          onFieldSubmitted: onFieldSubmitted,
-          onTap: onTap);
-    });
+        enableIMEPersonalizedLearning: mapDesire<bool, TextField>(desires, (e) => e.enableIMEPersonalizedLearning, true)!,
+        validator: validator,
+        autovalidateMode: autovalidateMode,
+        onChanged: onChanged,
+        onEditingComplete: onEditingComplete,
+        onFieldSubmitted: onFieldSubmitted,
+        onTap: onTap);
   }
 }
