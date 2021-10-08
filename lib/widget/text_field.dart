@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 
-import '../core.dart';
+import '../utilities.dart';
 
 InputDecoration _mergeInputDecoration(InputDecoration d1, InputDecoration d2) => InputDecoration(
     icon: d2.icon ?? d1.icon,

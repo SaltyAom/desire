@@ -1,5 +1,5 @@
 library desire;
 
-export 'core.dart';
+export 'utilities.dart';
+export 'desirable.dart';
 export 'widget/widget.dart';
-export 'desirable/desirable.dart';

@@ -26,9 +26,3 @@ class Desirable extends StatelessWidget {
 extension WrapDesirable on Widget {
   Desirable desirable() => Desirable(child: this);
 }
-
-// ignore: prefer_function_declarations_over_variables
-// final createDesire =
-//     (Widget Function(Widget child) create) => (Widget child) => create(child);
-
-void a() {}

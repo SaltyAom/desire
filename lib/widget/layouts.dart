@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../core.dart';
+import '../utilities.dart';
 
 Row columnToRow(Column e) => Row(
       mainAxisAlignment: e.mainAxisAlignment,

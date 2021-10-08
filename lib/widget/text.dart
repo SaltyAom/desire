@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../core.dart';
+import '../utilities.dart';
 
 SelectableText textToSelectableText(Text e) => SelectableText(
       "",

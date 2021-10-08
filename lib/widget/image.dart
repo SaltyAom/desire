@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../core.dart';
+import '../utilities.dart';
 
 extension DesireImage on Image {
   Image desire(List desirable) {
