@@ -99,7 +99,19 @@ class HomePage extends StatelessWidget {
           ).desire("px-2 text-blue-400"),
           Image.network(
             "https://user-images.githubusercontent.com/35027979/133552450-0dd6e24e-6c80-4658-be9b-72fd8308efbd.png",
-          ).desire("a")
+          ).desirable()
+            ..wrap(
+              (child) => SizedBox(
+                child: child,
+                width: 300,
+              ),
+            )
+            ..wrap(
+              (child) => ClipRRect(
+                child: child,
+                borderRadius: BorderRadius.circular(8),
+              ),
+            )
         ],
       ).desire("justify-center items-center"),
     );
