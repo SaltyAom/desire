@@ -34,6 +34,7 @@ extension DesireColumn on Column {
         final desires = getDesire(context);
 
         return Column(
+          key: key,
           children: children,
           mainAxisAlignment: mapDesire<MainAxisAlignment, Row>(
               desires, (e) => e.mainAxisAlignment, MainAxisAlignment.start)!,
@@ -69,6 +70,7 @@ extension DesireRow on Row {
         final desires = getDesire(context);
 
         return Row(
+          key: key,
           children: children,
           mainAxisAlignment: mapDesire<MainAxisAlignment, Row>(
               desires, (e) => e.mainAxisAlignment, MainAxisAlignment.start)!,
@@ -104,6 +106,7 @@ extension DesireStack on Stack {
         final desires = getDesire(context);
 
         return Stack(
+          key: key,
           children: children,
           alignment: mapDesire<AlignmentGeometry, Stack>(
               desires, (e) => e.alignment, AlignmentDirectional.topStart)!,

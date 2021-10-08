@@ -27,6 +27,7 @@ extension DesireText on Text {
 
       return Text(
         data ?? "",
+        key: key,
         textAlign: mapDesire<TextAlign, Text>(desires, (e) => e.textAlign),
         textDirection:
             mapDesire<TextDirection, Text>(desires, (e) => e.textDirection),
@@ -73,6 +74,7 @@ extension DesireSelectableText on SelectableText {
 
       return SelectableText(
         data ?? "",
+        key: key,
         textAlign:
             mapDesire<TextAlign, SelectableText>(desires, (e) => e.textAlign),
         textDirection: mapDesire<TextDirection, SelectableText>(

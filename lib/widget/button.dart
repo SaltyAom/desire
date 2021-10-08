@@ -59,6 +59,7 @@ extension DesireTextButton on TextButton {
         final desires = getDesire(context);
 
         return TextButton(
+          key: key,
           child: child ?? const SizedBox.shrink(),
           onPressed: onPressed,
           onLongPress: onLongPress,
@@ -106,6 +107,7 @@ extension DesireElevatedButton on ElevatedButton {
         final desires = getDesire(context);
 
         return ElevatedButton(
+          key: key,
           child: child ?? const SizedBox.shrink(),
           onPressed: onPressed,
           onLongPress: onLongPress,
@@ -153,6 +155,7 @@ extension DesireOutlineButton on OutlinedButton {
         final desires = getDesire(context);
 
         return OutlinedButton(
+          key: key,
           child: child ?? const SizedBox.shrink(),
           onPressed: onPressed,
           onLongPress: onLongPress,

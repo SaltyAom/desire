@@ -74,7 +74,8 @@ extension DesireTextField on TextField {
 
       final desirable = desires.split(" ").map((desire) => provider[desire]);
       final styles = [
-        style != null ? this : const TextField(style: TextStyle()),
+        this,
+        if (style == null) const TextField(style: TextStyle()),
         ...desirable.whereType<TextField>(),
         ...desirable
             .whereType<TextStyle>()
@@ -197,14 +198,24 @@ extension DesireTextFormField on TextFormField {
     VoidCallback? onEditingComplete,
     ValueChanged<String>? onFieldSubmitted,
     FormFieldSetter<String>? onSaved,
+    TextStyle? style,
+    InputDecoration? decoration,
+    ScrollController? scrollController,
+    Iterable<String>? autofillHints,
   }) {
     getDesire(BuildContext context) {
       final provider = DesireProvider.of(context);
 
       final desirable = desires.split(" ").map((desire) => provider[desire]);
       final styles = [
-        const TextField(style: TextStyle()),
-        ...desirable.whereType<TextField>()
+        TextField(
+          style: style ?? const TextStyle(),
+          decoration: decoration ?? const InputDecoration(),
+        ),
+        ...desirable.whereType<TextField>(),
+        ...desirable
+            .whereType<TextStyle>()
+            .map((style) => TextField(style: style))
       ].toList();
 
       return styles;
@@ -214,7 +225,11 @@ extension DesireTextFormField on TextFormField {
       final desires = getDesire(context);
 
       return TextFormField(
+          key: key,
           controller: controller,
+          initialValue: initialValue,
+          scrollController: scrollController,
+          autofillHints: autofillHints,
           focusNode:
               mapDesire<FocusNode, TextField>(desires, (e) => e.focusNode),
           decoration: desires

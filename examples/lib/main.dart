@@ -84,14 +84,15 @@ class HomePage extends StatelessWidget {
           const Text("Desire")
               .desire("font-medium text-xl text-blue-400 text-center"),
           const SelectableText("Selectable Desire")
-              .desire("font-medium text-xl text-blue-400"),
-          OutlinedButton.icon(
+              .desire("font-medium text-xl"),
+          ElevatedButton.icon(
             icon: const Icon(Icons.ac_unit),
             onPressed: () {},
             label: const Text("Hi"),
-          ).desire("btn-text-red"),
-          const TextField().desire("px-2"),
-          TextFormField().desire("px-2"),
+          ).desire("text-blue-400"),
+          const TextField(
+            decoration: InputDecoration(hintText: "Hello"),
+          ).desire("px-2 text-blue-400"),
         ],
       ).desire("justify-center items-center"),
     );
