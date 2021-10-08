@@ -14,12 +14,6 @@ class Desirable extends StatelessWidget {
     return child;
   }
 
-  Desirable wrap(Widget Function(Widget child) builder) {
-    child = builder(child);
-
-    return this;
-  }
-
   Desirable use(List<Widget Function(Widget)> desirable) {
     for (final desire in desirable) {
       child = desire(child);

@@ -37,6 +37,19 @@ Iterable<TextButton> _toTextButton(List desirable) => desirable.map((e) {
         );
       }
 
+      if (e is TextStyle) {
+        print(e);
+        return TextButton(
+          child: const SizedBox.shrink(),
+          style: ButtonStyle(
+            foregroundColor:
+                e.color != null ? MaterialStateProperty.all(e.color) : null,
+            textStyle: MaterialStateProperty.all(e),
+          ),
+          onPressed: null,
+        );
+      }
+
       return null;
     }).whereType<TextButton>();
 

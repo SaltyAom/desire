@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:desire/desire.dart';
 
 class De {
-  static const textRed400 = TextStyle(color: Colors.red);
+  static color(Color color) => TextStyle(color: color);
 
   static TextStyle xl(double size) => TextStyle(fontSize: size);
   static Column center = Column(
@@ -63,20 +63,33 @@ class HomePage extends StatelessWidget {
         children: [
           const Text(
             "Desire",
-          ).desire([De.textRed400, De.xl(60)]),
-          TextButton(
+          ).desire([
+            De.color(Colors.black),
+            De.xl(60),
+          ]),
+          ElevatedButton(
             child: const Text("Hello"),
             onPressed: () {},
           ).desire([
-            DeBtn.bg(Colors.blue.withOpacity(0.5)),
-            DeBtn.color(Colors.white),
+            DeBtn.bg(Colors.blue),
+            De.color(Colors.white),
+            ButtonStyle(
+              elevation: MaterialStateProperty.resolveWith((states) {
+                if (states.contains(MaterialState.pressed)) return 10;
+
+                return 2;
+              }),
+            ),
           ]),
           Image.network(
             "https://avatars.githubusercontent.com/u/35027979?s=400&u=9aaed6eefa4847aca63189846d2bc994b0608255&v=4",
           ).desirable()
             ..use([
               De.rounded(8),
-              // De.p(20),
+              (child) => Padding(
+                    child: child,
+                    padding: const EdgeInsets.all(40),
+                  ),
             ])
         ],
       ).desire([De.center]),
