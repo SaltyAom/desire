@@ -28,3 +28,9 @@ T? mapDesire<T, W extends Widget>(
     desires
         .map(propertyCallback)
         .lastWhere((v) => v is T && v != init, orElse: () => init);
+
+typedef DesireBuilder<T extends Widget> = T Function(BuildContext context);
+
+List<T> mapDesireBuilder<T extends Widget>(
+        Iterable<Object?> desirable, BuildContext context) =>
+    desirable.whereType<DesireBuilder<T>>().map((e) => e(context)).toList();

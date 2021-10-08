@@ -5,6 +5,19 @@ import 'package:flutter/material.dart';
 
 import '../core.dart';
 
+List<SelectableText> mapTextToSelectableText(List<Text> e) => e
+    .map((e) => SelectableText(
+          "",
+          style: e.style,
+          textAlign: e.textAlign,
+          textDirection: e.textDirection,
+          textScaleFactor: e.textScaleFactor,
+          maxLines: e.maxLines,
+          textWidthBasis: e.textWidthBasis,
+          textHeightBehavior: e.textHeightBehavior,
+        ))
+    .toList();
+
 extension DesireText on Text {
   Builder desire(String desires) {
     getDesire(BuildContext context) {
@@ -16,7 +29,8 @@ extension DesireText on Text {
         ...desirable.whereType<Text>(),
         ...desirable
             .whereType<TextStyle>()
-            .map((style) => Text("", style: style))
+            .map((style) => Text("", style: style)),
+        ...mapDesireBuilder<Text>(desirable, context),
       ].toList();
 
       return styles;
@@ -60,10 +74,12 @@ extension DesireSelectableText on SelectableText {
       final desirable = desires.split(" ").map((desire) => provider[desire]);
       final styles = [
         style != null ? this : const SelectableText("", style: TextStyle()),
+        ...mapTextToSelectableText(desirable.whereType<Text>().toList()),
         ...desirable.whereType<SelectableText>(),
         ...desirable
             .whereType<TextStyle>()
-            .map((style) => SelectableText("", style: style))
+            .map((style) => SelectableText("", style: style)),
+        ...mapDesireBuilder<SelectableText>(desirable, context),
       ].toList();
 
       return styles;

@@ -48,7 +48,8 @@ extension DesireTextButton on TextButton {
         ...desirable.where((e) =>
             e is TextButton || e is ElevatedButton || e is OutlinedButton),
         ...desirable.whereType<ButtonStyle>().map((style) => TextButton(
-            child: const SizedBox.shrink(), style: style, onPressed: null))
+            child: const SizedBox.shrink(), style: style, onPressed: null)),
+        ...mapDesireBuilder<TextButton>(desirable, context),
       ].toList());
 
       return styles;
@@ -96,7 +97,8 @@ extension DesireElevatedButton on ElevatedButton {
         ...desirable.where((e) =>
             e is TextButton || e is ElevatedButton || e is OutlinedButton),
         ...desirable.whereType<ButtonStyle>().map((style) => TextButton(
-            child: const SizedBox.shrink(), style: style, onPressed: null))
+            child: const SizedBox.shrink(), style: style, onPressed: null)),
+        ...mapDesireBuilder<ElevatedButton>(desirable, context),
       ].toList());
 
       return styles;
@@ -144,7 +146,8 @@ extension DesireOutlineButton on OutlinedButton {
         ...desirable.where((e) =>
             e is TextButton || e is ElevatedButton || e is OutlinedButton),
         ...desirable.whereType<ButtonStyle>().map((style) => TextButton(
-            child: const SizedBox.shrink(), style: style, onPressed: null))
+            child: const SizedBox.shrink(), style: style, onPressed: null)),
+        ...mapDesireBuilder<OutlinedButton>(desirable, context),
       ].toList());
 
       return styles;

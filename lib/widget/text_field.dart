@@ -79,7 +79,8 @@ extension DesireTextField on TextField {
         ...desirable.whereType<TextField>(),
         ...desirable
             .whereType<TextStyle>()
-            .map((style) => TextField(style: style))
+            .map((style) => TextField(style: style)),
+        ...mapDesireBuilder<TextField>(desirable, context),
       ].toList();
 
       return styles;
@@ -215,7 +216,8 @@ extension DesireTextFormField on TextFormField {
         ...desirable.whereType<TextField>(),
         ...desirable
             .whereType<TextStyle>()
-            .map((style) => TextField(style: style))
+            .map((style) => TextField(style: style)),
+        ...mapDesireBuilder<TextField>(desirable, context),
       ].toList();
 
       return styles;

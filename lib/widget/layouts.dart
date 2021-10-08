@@ -24,7 +24,12 @@ extension DesireColumn on Column {
       final provider = DesireProvider.of(context);
 
       final desirable = desires.split(" ").map((desire) => provider[desire]);
-      final styles = toRows([this, ...desirable].toList());
+      final styles = toRows([
+        this,
+        ...desirable,
+        ...mapDesireBuilder<Column>(desirable, context),
+        ...mapDesireBuilder<Row>(desirable, context),
+      ].toList());
 
       return styles;
     }
@@ -60,7 +65,12 @@ extension DesireRow on Row {
       final provider = DesireProvider.of(context);
 
       final desirable = desires.split(" ").map((desire) => provider[desire]);
-      final styles = toRows([this, ...desirable].toList());
+      final styles = toRows([
+        this,
+        ...desirable,
+        ...mapDesireBuilder<Column>(desirable, context),
+        ...mapDesireBuilder<Row>(desirable, context),
+      ].toList());
 
       return styles;
     }

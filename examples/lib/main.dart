@@ -54,6 +54,10 @@ void main() {
           floatingLabelBehavior: FloatingLabelBehavior.never,
         ),
       ),
+      "a": (BuildContext context) => Image(
+            image: const NetworkImage(""),
+            width: MediaQuery.of(context).size.width / 2,
+          )
     },
   ));
 }
@@ -93,6 +97,9 @@ class HomePage extends StatelessWidget {
           const TextField(
             decoration: InputDecoration(hintText: "Hello"),
           ).desire("px-2 text-blue-400"),
+          Image.network(
+            "https://user-images.githubusercontent.com/35027979/133552450-0dd6e24e-6c80-4658-be9b-72fd8308efbd.png",
+          ).desire("a")
         ],
       ).desire("justify-center items-center"),
     );
