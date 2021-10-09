@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-T? mapDesire<T, W extends Widget>(
+T? mapDesire<T, W extends Object>(
         List<W> desires, T? Function(W e) propertyCallback, [T? init]) =>
     desires
         .map(propertyCallback)

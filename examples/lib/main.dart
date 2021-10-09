@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:desire/desire.dart';
+import 'package:flutter/rendering.dart';
 
 class De {
   static color(Color color) => TextStyle(color: color);
@@ -28,6 +29,9 @@ class De {
           color: color,
         ),
       );
+
+  static BoxConstraints size() =>
+      const BoxConstraints.tightFor(width: 100, height: 100);
 }
 
 class DeIn {
@@ -115,6 +119,7 @@ class HomePage extends StatelessWidget {
               }),
             ),
           ]),
+          Container().desire([De.size(), De.bg(Colors.red)]),
           Image.network(
             "https://avatars.githubusercontent.com/u/35027979?s=400&u=9aaed6eefa4847aca63189846d2bc994b0608255&v=4",
           ).desirable()

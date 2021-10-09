@@ -31,7 +31,13 @@ extension DesireContainer on Container {
         foregroundDecoration: const BoxDecoration(),
         constraints: const BoxConstraints(),
       ),
-      ...desirable.whereType<Container>(),
+      ...desirable.map((e) {
+        if (e is Container) return e;
+        if (e is BoxDecoration) return Container(decoration: e);
+        if (e is BoxConstraints) return Container(constraints: e);
+
+        return null;
+      }).whereType<Container>(),
     ].toList();
 
     return Container(

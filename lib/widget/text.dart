@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../utilities.dart';
 
-SelectableText textToSelectableText(Text e) => SelectableText(
+SelectableText _textToSelectableText(Text e) => SelectableText(
       "",
       style: e.style,
       textAlign: e.textAlign,
@@ -14,6 +14,27 @@ SelectableText textToSelectableText(Text e) => SelectableText(
       maxLines: e.maxLines,
       textWidthBasis: e.textWidthBasis,
       textHeightBehavior: e.textHeightBehavior,
+      strutStyle: e.strutStyle,
+    );
+
+RichText _textToRichText(Text e) => RichText(
+      text: const TextSpan(),
+      textAlign: e.textAlign ?? TextAlign.start,
+      textDirection: e.textDirection,
+      softWrap: e.softWrap ?? true,
+      overflow: e.overflow ?? TextOverflow.clip,
+      textScaleFactor: e.textScaleFactor ?? 1,
+      maxLines: e.maxLines,
+      locale: e.locale,
+      strutStyle: e.strutStyle,
+      textWidthBasis: e.textWidthBasis ?? TextWidthBasis.parent,
+      textHeightBehavior: e.textHeightBehavior,
+    );
+
+TextSpan _textToTextSpan(Text e) => TextSpan(
+      style: e.style,
+      semanticsLabel: e.semanticsLabel,
+      locale: e.locale,
     );
 
 extension DesireText on Text {
@@ -52,13 +73,77 @@ extension DesireText on Text {
   }
 }
 
+extension DesireTextSpan on TextSpan {
+  TextSpan desire(List desirable) {
+    final desires = [
+      style != null ? this : const TextSpan(style: TextStyle()),
+      ...desirable.map((e) {
+        if (e is TextSpan) return e;
+        if (e is Text) return _textToTextSpan(e);
+        if (e is TextStyle) return TextSpan(style: e);
+        return null;
+      }).whereType<TextSpan>(),
+    ].toList();
+
+    return TextSpan(
+      text: text,
+      children: children,
+      style: desires
+          .map((e) => e.style)
+          .whereType<TextStyle>()
+          .reduce((acc, e) => acc.merge(e)),
+      recognizer: recognizer,
+      mouseCursor:
+          mapDesire<MouseCursor, TextSpan>(desires, (e) => e.mouseCursor),
+      onEnter: onEnter,
+      onExit: onExit,
+      semanticsLabel:
+          mapDesire<String, TextSpan>(desires, (e) => e.semanticsLabel),
+      locale: mapDesire<Locale, TextSpan>(desires, (e) => e.locale),
+      spellOut: spellOut,
+    );
+  }
+}
+
+extension DesireRichText on RichText {
+  RichText desire(List desirable) {
+    final desires = [
+      ...desirable.map((e) {
+        if (e is RichText) return e;
+        if (e is Text) return _textToRichText(e);
+        return null;
+      }).whereType<RichText>(),
+    ].toList();
+
+    return RichText(
+      key: key,
+      text: text,
+      textAlign: mapDesire<TextAlign, RichText>(
+          desires, (e) => e.textAlign, TextAlign.start)!,
+      textDirection:
+          mapDesire<TextDirection, RichText>(desires, (e) => e.textDirection),
+      softWrap: mapDesire<bool, RichText>(desires, (e) => e.softWrap, true)!,
+      overflow: mapDesire<TextOverflow, RichText>(
+          desires, (e) => e.overflow, TextOverflow.clip)!,
+      textScaleFactor:
+          mapDesire<double, RichText>(desires, (e) => e.textScaleFactor, 1.0)!,
+      maxLines: mapDesire<int, RichText>(desires, (e) => e.maxLines),
+      locale: mapDesire<Locale, RichText>(desires, (e) => e.locale),
+      textWidthBasis: mapDesire<TextWidthBasis, RichText>(
+          desires, (e) => e.textWidthBasis, TextWidthBasis.parent)!,
+      textHeightBehavior: mapDesire<TextHeightBehavior, RichText>(
+          desires, (e) => e.textHeightBehavior),
+    );
+  }
+}
+
 extension DesireSelectableText on SelectableText {
   SelectableText desire(List desirable) {
     final desires = [
       style != null ? this : const SelectableText("", style: TextStyle()),
       ...desirable.map((e) {
         if (e is SelectableText) return e;
-        if (e is Text) return textToSelectableText(e);
+        if (e is Text) return _textToSelectableText(e);
         if (e is TextStyle) return Text("", style: e);
         return null;
       }).whereType<SelectableText>(),
