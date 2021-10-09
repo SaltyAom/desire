@@ -24,6 +24,16 @@ class De {
       );
 }
 
+class DeIn {
+  static color(Color color) => Slider(
+        value: 0,
+        onChanged: (_) {},
+        thumbColor: color,
+        activeColor: color,
+        inactiveColor: color.withOpacity(.25),
+      );
+}
+
 class DeBtn {
   static ButtonStyle bg(Color color) => ButtonStyle(
         backgroundColor: MaterialStateProperty.all(color),
@@ -67,9 +77,22 @@ class HomePage extends StatelessWidget {
             De.color(Colors.black),
             De.xl(60),
           ]),
+          Slider(
+            value: 50,
+            min: 0,
+            max: 100,
+            onChanged: (_) {},
+          ).desire([DeIn.color(Colors.red)]),
           ElevatedButton(
             child: const Text("Hello"),
-            onPressed: () {},
+            onPressed: () {
+              showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(2000),
+                lastDate: DateTime(2025),
+              );
+            },
           ).desire([
             DeBtn.bg(Colors.blue),
             De.color(Colors.white),
