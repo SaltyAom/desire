@@ -184,8 +184,7 @@ extension DesireSelectableText on SelectableText {
           desires, (e) => e.enableInteractiveSelection, true)!,
       selectionControls: mapDesire<TextSelectionControls, SelectableText>(
           desires, (e) => e.selectionControls),
-      onTap:
-          mapDesire<void Function(), SelectableText>(desires, (e) => e.onTap),
+      onTap: onTap,
       scrollPhysics: mapDesire<ScrollPhysics, SelectableText>(
           desires, (e) => e.scrollPhysics),
       textWidthBasis: mapDesire<TextWidthBasis, SelectableText>(
