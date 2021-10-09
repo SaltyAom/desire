@@ -22,15 +22,25 @@ class De {
         child: child,
         padding: EdgeInsets.all(padding),
       );
+
+  static Container bg(Color color) => Container(
+        decoration: BoxDecoration(
+          color: color,
+        ),
+      );
 }
 
 class DeIn {
-  static color(Color color) => Slider(
+  static Slider color(Color color) => Slider(
         value: 0,
         onChanged: (_) {},
         thumbColor: color,
         activeColor: color,
         inactiveColor: color.withOpacity(.25),
+      );
+
+  static AlertDialog titleColor(Color color) => AlertDialog(
+        titleTextStyle: De.color(color),
       );
 }
 
@@ -86,11 +96,12 @@ class HomePage extends StatelessWidget {
           ElevatedButton(
             child: const Text("Hello"),
             onPressed: () {
-              showDatePicker(
+              showDialog(
                 context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(2000),
-                lastDate: DateTime(2025),
+                builder: (_) => const AlertDialog(
+                  title: Text("Hello World"),
+                  content: Text("Lorem Ipsum Dolar"),
+                ).desire([DeIn.titleColor(Colors.red)]),
               );
             },
           ).desire([
