@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 @immutable
 // ignore: camel_case_types
 class frs {
+  const frs() : assert(true, "You shouldn't construct frs (Floret Stack)");
+
   static Stack alignment(AlignmentDirectional alignment) => Stack(
         alignment: alignment,
       );

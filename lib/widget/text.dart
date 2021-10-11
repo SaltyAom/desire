@@ -37,6 +37,22 @@ TextSpan _textToTextSpan(Text e) => TextSpan(
       locale: e.locale,
     );
 
+extension DesireTextStyle on TextStyle {
+  TextStyle desire(List desirable) {
+    final desires = [
+      this,
+      ...desirable.map((e) {
+        if (e is TextStyle) return e;
+        if (e is Text) return const TextStyle().merge(e.style);
+
+        return null;
+      }).whereType<TextStyle>(),
+    ].toList();
+
+    return desires.map((e) => e).reduce((acc, e) => acc.merge(e));
+  }
+}
+
 extension DesireText on Text {
   Text desire(List desirable) {
     final desires = [

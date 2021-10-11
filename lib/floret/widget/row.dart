@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 @immutable
 // ignore: camel_case_types
 class frr {
+  const frr() : assert(true, "You shouldn't construct frr (Floret Rpw)");
+
   static Row mainAxisAlignment(MainAxisAlignment alignment) => Row(
         mainAxisAlignment: alignment,
       );

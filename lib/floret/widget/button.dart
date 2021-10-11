@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'text.dart';
-
 @immutable
 // ignore: camel_case_types
 class frb {

@@ -87,13 +87,9 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const Text(
-            "Floret\nText",
-          ).desire([
+          const Text("Floret").desire([
             frt.h2(context),
-            frt.color(Colors.blue),
-            frt.bold,
-            frt.underline,
+            frt.w200,
             frt.center,
           ]).desirable()
             ..use([
@@ -105,6 +101,20 @@ class HomePage extends StatelessWidget {
           ).desire([
             frb.fg(base: Colors.red, pressed: Colors.blue),
           ]),
+          const TextField(
+            decoration: InputDecoration(labelText: "Hi"),
+          ).desire([
+            frid.floatingLabelStyle(
+              const TextStyle().desire([
+                frt.fontSize(16),
+                frt.bold,
+              ]),
+            ),
+            frid.border(const OutlineInputBorder())
+          ]).desirable()
+            ..use([
+              fr.p(20),
+            ]),
           // Slider(
           //   value: 50,
           //   min: 0,
