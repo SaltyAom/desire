@@ -89,15 +89,13 @@ class HomePage extends StatelessWidget {
         children: [
           const Text(
             "Floret\nText",
-          ).desire(
-            [
-              frt.h2(context),
-              frt.color(Colors.blue),
-              frt.bold,
-              frt.underline,
-              frt.center,
-            ],
-          ).desirable()
+          ).desire([
+            frt.h2(context),
+            frt.color(Colors.blue),
+            frt.bold,
+            frt.underline,
+            frt.center,
+          ]).desirable()
             ..use([
               fr.p(20),
             ]),
@@ -141,7 +139,10 @@ class HomePage extends StatelessWidget {
           //         ),
           //   ])
         ],
-      ).desire([De.center]),
+      ).desire([
+        frr.mainCenter,
+        frr.stretch,
+      ]),
     );
   }
 }
