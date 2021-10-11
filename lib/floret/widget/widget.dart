@@ -1,5 +1,6 @@
 export 'floret.dart';
 
+export 'alert.dart';
 export 'button.dart';
 export 'input_decoration.dart';
 export 'row.dart';
