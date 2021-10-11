@@ -24,5 +24,6 @@ class Desirable extends StatelessWidget {
 }
 
 extension WrapDesirable on Widget {
-  Desirable desirable() => Desirable(child: this);
+  Desirable desirable([List<Widget Function(Widget)> desirable = const []]) =>
+      Desirable(child: this).use(desirable);
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:desire/desire.dart';
-import 'package:flutter/rendering.dart';
-
 import 'package:desire/floret/floret.dart';
+
+import 'theme/music.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,90 +16,135 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        backgroundColor: MusicTheme.accent,
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)
+            .copyWith(secondary: MusicTheme.primary),
       ),
-      home: const HomePage(),
+      home: const Music(),
     );
   }
 }
 
-class MyClass {
-  static final button = [
-    frb.bg(all: Colors.blue),
-    frb.elevation(base: 2, pressed: 10),
-    frb.size(all: const Size(120, 48)),
-    frt.color(Colors.white),
-    frt.size(21),
-    frt.bold
-  ];
-  static title(context) => [
-        frt.h2(context),
-        frt.w200,
-        frt.center,
-      ];
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class Music extends StatelessWidget {
+  const Music({Key? key}) : super(key: key);
 
   @override
   build(context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const Text("Floret")
-              .desire(
-                MyClass.title(context),
-              )
-              .desirable()
-            ..use([
-              fr.p(20),
-            ]),
-          TextButton(
-            child: const Text("Hello"),
+        appBar: AppBar(
+          backgroundColor: MusicTheme.accent,
+          elevation: 0,
+          leading: IconButton(
             onPressed: () {},
-          ).desire([
-            frb.fg(base: Colors.red, pressed: Colors.blue),
-          ]),
-          const TextField(
-            decoration: InputDecoration(labelText: "Hi"),
-          ).desire([
-            frid.floatingLabelStyle(
-              const TextStyle().desire([
-                frt.fontSize(16),
-                frt.bold,
-              ]),
+            icon: const Icon(Icons.expand_more, size: 28),
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.more_vert, size: 28),
+            )
+          ],
+        ),
+        body: Column(children: [
+          Image.network(
+            "https://i.scdn.co/image/ab67616d0000b273fda602632b312456528dd12a",
+          ) //
+              .desirable(MusicTheme.cover)
+              .desirable([fr.px(20)]),
+
+          // * <Start> Detail Section */
+          Row(children: [
+            IconButton(
+              onPressed: () {},
+              color: Colors.white,
+              icon: const Icon(
+                Icons.thumb_down_off_alt,
+              ),
             ),
-            frid.border(const OutlineInputBorder())
-          ]).desirable()
-            ..use([
-              fr.p(20),
-            ]),
-          Slider(
-            value: 0,
-            min: 0,
-            max: 100,
-            onChanged: (_) {},
-          ).desire([
-            frsl.autoColor(Colors.red),
-          ]),
-          ElevatedButton(
-            child: const Text("Hello"),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (_) => const AlertDialog(
-                  title: Text("Hello World"),
-                  content: Text("Lorem Ipsum Dolar"),
-                ),
-              );
-            },
-          ).desire(MyClass.button),
-        ],
-      ).desire([
-        frr.mainCenter,
-      ]),
-    );
+            Column(children: [
+              const Text("Paradise") //
+                  .desire(MusicTheme.title)
+                  .desirable([fr.pb(12)]),
+              const Text("Sound souler").desire(MusicTheme.artist)
+            ]).desire(MusicTheme.centerLayout),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.thumb_up_alt_outlined,
+                color: Colors.white,
+              ),
+            ),
+          ]) //
+              .desire(MusicTheme.betweenLayout)
+              .desirable(MusicTheme.detailContainer),
+          // * </End> Detail Section */
+
+          // * <Start> Slider / Timer Section */
+          MusicTheme.slider(
+            context,
+            Slider(
+              onChanged: (_) {},
+              value: 42,
+              min: 0,
+              max: 146,
+              activeColor: Colors.white,
+              thumbColor: Colors.white,
+              inactiveColor: Colors.white70,
+            ).desirable([fr.height(28)]),
+          ),
+          Row(
+            children: [
+              const Text("0:42").desire(MusicTheme.time),
+              const Text("2:26").desire(MusicTheme.time),
+            ],
+          ) //
+              .desire(MusicTheme.betweenLayout)
+              .desirable([fr.px(20), fr.pb(20)]),
+          // * </End> Slider / Timer Section */
+
+          // * <Start> Control Section */
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.shuffle),
+              ).desire([MusicTheme.subAction]),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.skip_previous),
+              ).desire([MusicTheme.action]),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.play_arrow),
+              ) //
+                  .desire([MusicTheme.action]) //
+                  .desirable([
+                fr.bg(MusicTheme.primary),
+                fr.rounded(),
+              ]),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.skip_next),
+              ).desire([MusicTheme.action]),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.repeat),
+              ).desire([MusicTheme.subAction]),
+            ],
+          ) //
+              .desire(MusicTheme.betweenLayout)
+              .desirable([fr.px(8)])
+          // * </End> Control Section */
+        ]) //
+            .desire(MusicTheme.centerLayout)
+            .desirable([
+          (Widget child) => SafeArea(
+                top: false,
+                child: child,
+              )
+        ])
+          ..use([fr.px(16), fr.bg(MusicTheme.accent)]));
   }
 }

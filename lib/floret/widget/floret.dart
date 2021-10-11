@@ -31,16 +31,57 @@ class fr {
       );
   static FloretParent<Padding> pb(double padding) => (Widget child) => Padding(
         child: child,
-        padding: EdgeInsets.only(top: padding),
+        padding: EdgeInsets.only(bottom: padding),
       );
   static FloretParent<Padding> pl(double padding) => (Widget child) => Padding(
         child: child,
-        padding: EdgeInsets.only(top: padding),
+        padding: EdgeInsets.only(left: padding),
       );
   static FloretParent<Padding> pr(double padding) => (Widget child) => Padding(
         child: child,
-        padding: EdgeInsets.only(top: padding),
+        padding: EdgeInsets.only(right: padding),
       );
+
+  static FloretParent<Container> margin(EdgeInsets margin) =>
+      (Widget child) => Container(
+            child: child,
+            margin: margin,
+          );
+  static FloretParent<Container> m(double margin) =>
+      (Widget child) => Container(
+            child: child,
+            margin: EdgeInsets.all(margin),
+          );
+  static FloretParent<Container> mx(double margin) =>
+      (Widget child) => Container(
+            child: child,
+            margin: EdgeInsets.symmetric(horizontal: margin),
+          );
+  static FloretParent<Container> my(double margin) =>
+      (Widget child) => Container(
+            child: child,
+            margin: EdgeInsets.symmetric(horizontal: margin),
+          );
+  static FloretParent<Container> mt(double margin) =>
+      (Widget child) => Container(
+            child: child,
+            margin: EdgeInsets.only(top: margin),
+          );
+  static FloretParent<Container> mb(double margin) =>
+      (Widget child) => Container(
+            child: child,
+            margin: EdgeInsets.only(bottom: margin),
+          );
+  static FloretParent<Container> ml(double margin) =>
+      (Widget child) => Container(
+            child: child,
+            margin: EdgeInsets.only(left: margin),
+          );
+  static FloretParent<Container> mr(double margin) =>
+      (Widget child) => Container(
+            child: child,
+            margin: EdgeInsets.only(right: margin),
+          );
 
   static FloretParent<Align> align(Alignment align) => (Widget child) => Align(
         child: child,
@@ -306,6 +347,12 @@ class fr {
       (Widget child) => Flexible(
             child: child,
             flex: flex,
+          );
+
+  static FloretParent<AspectRatio> aspectRatio(double aspectRatio) =>
+      (Widget child) => AspectRatio(
+            child: child,
+            aspectRatio: aspectRatio,
           );
 
   static FloretParent<AnimatedBuilder> animated(Animation controller,
