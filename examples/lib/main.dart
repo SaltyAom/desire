@@ -99,6 +99,12 @@ class HomePage extends StatelessWidget {
             ..use([
               fr.p(20),
             ]),
+          TextButton(
+            child: const Text("Hello"),
+            onPressed: () {},
+          ).desire([
+            frb.fg(base: Colors.red, pressed: Colors.blue),
+          ]),
           // Slider(
           //   value: 50,
           //   min: 0,
@@ -141,7 +147,6 @@ class HomePage extends StatelessWidget {
         ],
       ).desire([
         frr.mainCenter,
-        frr.stretch,
       ]),
     );
   }

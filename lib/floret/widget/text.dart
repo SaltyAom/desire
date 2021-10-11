@@ -6,6 +6,8 @@ import 'package:flutter/widgets.dart';
 @immutable
 // ignore: camel_case_types
 class frt {
+  const frt() : assert(true, "You shouldn't construct frt (Floret Text)");
+
   static TextStyle h1(BuildContext context) =>
       Theme.of(context).textTheme.headline1 ?? const TextStyle();
   static TextStyle h2(BuildContext context) =>
