@@ -103,57 +103,39 @@ class HomePage extends StatelessWidget {
           ]),
           const TextField(
             decoration: InputDecoration(labelText: "Hi"),
-          ).desire([
-            frid.floatingLabelStyle(
-              const TextStyle().desire([
-                frt.fontSize(16),
-                frt.bold,
-              ]),
-            ),
-            frid.border(const OutlineInputBorder())
-          ]).desirable()
+          ).desire(
+            [
+              frid.floatingLabelStyle(
+                const TextStyle().desire([
+                  frt.fontSize(16),
+                  frt.bold,
+                ]),
+              ),
+              frid.border(const OutlineInputBorder())
+            ],
+          ).desirable()
             ..use([
               fr.p(20),
             ]),
-          // Slider(
-          //   value: 50,
-          //   min: 0,
-          //   max: 100,
-          //   onChanged: (_) {},
-          // ).desire([DeIn.color(Colors.red)]),
-          // ElevatedButton(
-          //   child: const Text("Hello"),
-          //   onPressed: () {
-          //     showDialog(
-          //       context: context,
-          //       builder: (_) => const AlertDialog(
-          //         title: Text("Hello World"),
-          //         content: Text("Lorem Ipsum Dolar"),
-          //       ).desire([DeIn.titleColor(Colors.red)]),
-          //     );
-          //   },
-          // ).desire([
-          //   DeBtn.bg(Colors.blue),
-          //   De.color(Colors.white),
-          //   ButtonStyle(
-          //     elevation: MaterialStateProperty.resolveWith((states) {
-          //       if (states.contains(MaterialState.pressed)) return 10;
-
-          //       return 2;
-          //     }),
-          //   ),
-          // ]),
-          // Container().desire([De.size(), De.bg(Colors.red)]),
-          // Image.network(
-          //   "https://avatars.githubusercontent.com/u/35027979?s=400&u=9aaed6eefa4847aca63189846d2bc994b0608255&v=4",
-          // ).desirable()
-          //   ..use([
-          //     De.rounded(8),
-          //     (child) => Padding(
-          //           child: child,
-          //           padding: const EdgeInsets.all(40),
-          //         ),
-          //   ])
+          ElevatedButton(
+            child: const Text("Hello"),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (_) => const AlertDialog(
+                  title: Text("Hello World"),
+                  content: Text("Lorem Ipsum Dolar"),
+                ).desire([DeIn.titleColor(Colors.red)]),
+              );
+            },
+          ).desire([
+            frb.bg(all: Colors.blue),
+            frb.elevation(base: 2, pressed: 10),
+            frb.size(all: const Size(120, 60)),
+            frt.color(Colors.white),
+            frt.size(18),
+            frt.bold
+          ]),
         ],
       ).desire([
         frr.mainCenter,

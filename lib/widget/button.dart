@@ -77,7 +77,7 @@ extension DesireTextButton on TextButton {
       style: desires
           .map((e) => e.style)
           .whereType<ButtonStyle>()
-          .reduce((acc, e) => acc.merge(e)),
+          .reduce((acc, e) => acc.merge(e).copyWith(textStyle: e.textStyle)),
       focusNode: mapDesire<FocusNode, TextButton>(desires, (e) => e.focusNode),
       autofocus:
           mapDesire<bool, TextButton>(desires, (e) => e.autofocus, false)!,
@@ -99,7 +99,7 @@ extension DesireElevatedButton on ElevatedButton {
       style: desires
           .map((e) => e.style)
           .whereType<ButtonStyle>()
-          .reduce((acc, e) => acc.merge(e)),
+          .reduce((acc, e) => acc.merge(e).copyWith(textStyle: e.textStyle)),
       focusNode: mapDesire<FocusNode, TextButton>(desires, (e) => e.focusNode),
       autofocus:
           mapDesire<bool, TextButton>(desires, (e) => e.autofocus, false)!,
@@ -121,7 +121,7 @@ extension DesireOutlineButton on OutlinedButton {
       style: desires
           .map((e) => e.style)
           .whereType<ButtonStyle>()
-          .reduce((acc, e) => acc.merge(e)),
+          .reduce((acc, e) => acc.merge(e).copyWith(textStyle: e.textStyle)),
       focusNode: mapDesire<FocusNode, TextButton>(desires, (e) => e.focusNode),
       autofocus:
           mapDesire<bool, TextButton>(desires, (e) => e.autofocus, false)!,

@@ -30,6 +30,7 @@ class frt {
   static TextStyle bg(Color color) => TextStyle(backgroundColor: color);
   static TextStyle background(Color color) => TextStyle(backgroundColor: color);
   static TextStyle fontSize(double fontSize) => TextStyle(fontSize: fontSize);
+  static TextStyle size(double size) => fontSize(size);
 
   static const bold = TextStyle(fontWeight: FontWeight.bold);
   static const italic = TextStyle(fontStyle: FontStyle.italic);
