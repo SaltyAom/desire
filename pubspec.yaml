@@ -1,7 +1,8 @@
 name: desire
 description: A new Flutter package project.
 version: 0.0.1
-homepage:
+homepage: https://github.com/saltyaom/desire
+repository: https://github.com/saltyaom/desire
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
