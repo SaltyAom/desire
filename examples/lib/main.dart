@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 
 import 'package:desire/desire.dart';
-import 'package:desire/floret/floret.dart';
+import 'package:floret/floret.dart';
 
 import 'theme/music.dart';
 

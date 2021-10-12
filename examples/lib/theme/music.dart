@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:desire/floret/floret.dart';
+import 'package:floret/floret.dart';
 
 import 'package:flutter/rendering.dart';
 
