@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-typedef FloretParent<T extends Widget> = T Function(Widget child);
+typedef FloretParent<T extends Object> = T Function(Widget child);
 typedef FloretFactory = Function(Widget child);
 
 // ignore: camel_case_types

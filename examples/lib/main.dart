@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:pausable_timer/pausable_timer.dart';
 
 import 'package:desire/desire.dart';
 import 'package:desire/floret/floret.dart';
@@ -27,8 +30,78 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Music extends StatelessWidget {
+class Music extends StatefulWidget {
   const Music({Key? key}) : super(key: key);
+
+  @override
+  _MusicState createState() => _MusicState();
+}
+
+class _MusicState extends State<Music> with SingleTickerProviderStateMixin {
+  double currentTime = 42;
+  double limit = 146 + 0.9;
+  bool playing = false;
+
+  late final PausableTimer timer;
+  late final AnimationController controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 160),
+    );
+
+    timer = PausableTimer(const Duration(milliseconds: 8), () {
+      timer.reset();
+
+      if (currentTime < (limit - 0.025)) {
+        setState(() {
+          currentTime += 0.0125;
+        });
+
+        timer.start();
+      } else {
+        setState(() {
+          playing = false;
+        });
+
+        controller.reverse();
+        timer.pause();
+      }
+    });
+  }
+
+  void handlePlay() {
+    if (playing) {
+      controller.reverse();
+      timer.pause();
+    } else {
+      if (currentTime >= limit - 0.025) {
+        setState(() {
+          currentTime = 0;
+        });
+      }
+
+      controller.forward();
+      timer.start();
+    }
+
+    setState(() {
+      playing = !playing;
+    });
+  }
+
+  String formatMinute(double time) {
+    final t = time.toInt();
+    final minute = (t / 60).floor();
+    final seconds = (t % 60).floor();
+    final formattedSeconds = seconds > 9 ? "$seconds" : "0$seconds";
+
+    return "$minute:$formattedSeconds";
+  }
 
   @override
   build(context) {
@@ -58,10 +131,8 @@ class Music extends StatelessWidget {
           Row(children: [
             IconButton(
               onPressed: () {},
-              color: Colors.white,
-              icon: const Icon(
-                Icons.thumb_down_off_alt,
-              ),
+              color: Colors.grey.shade400,
+              icon: const Icon(Icons.thumb_down_off_alt),
             ),
             Column(children: [
               const Text("Paradise") //
@@ -71,10 +142,8 @@ class Music extends StatelessWidget {
             ]).desire(MusicTheme.centerLayout),
             IconButton(
               onPressed: () {},
-              icon: const Icon(
-                Icons.thumb_up_alt_outlined,
-                color: Colors.white,
-              ),
+              color: Colors.grey.shade400,
+              icon: const Icon(Icons.thumb_up_off_alt),
             ),
           ]) //
               .desire(MusicTheme.betweenLayout)
@@ -82,26 +151,34 @@ class Music extends StatelessWidget {
           // * </End> Detail Section */
 
           // * <Start> Slider / Timer Section */
-          MusicTheme.slider(
-            context,
-            Slider(
-              onChanged: (_) {},
-              value: 42,
-              min: 0,
-              max: 146,
-              activeColor: Colors.white,
-              thumbColor: Colors.white,
-              inactiveColor: Colors.white70,
-            ).desirable([fr.height(28)]),
-          ),
+          Slider(
+            onChangeStart: (_) {
+              timer.pause();
+            },
+            onChanged: (newTime) {
+              setState(() {
+                currentTime = newTime;
+              });
+            },
+            onChangeEnd: (_) {
+              if (playing) {
+                timer.start();
+              }
+            },
+            value: currentTime,
+            min: 0,
+            max: limit,
+          ) //
+              .desire([MusicTheme.slider]) //
+              .desirable([fr.height(28)]),
           Row(
             children: [
-              const Text("0:42").desire(MusicTheme.time),
-              const Text("2:26").desire(MusicTheme.time),
+              Text(formatMinute(currentTime)).desire(MusicTheme.time),
+              Text(formatMinute(146)).desire(MusicTheme.time),
             ],
           ) //
               .desire(MusicTheme.betweenLayout)
-              .desirable([fr.px(20), fr.pb(20)]),
+              .desirable([fr.px(24), fr.pb(20)]),
           // * </End> Slider / Timer Section */
 
           // * <Start> Control Section */
@@ -116,8 +193,11 @@ class Music extends StatelessWidget {
                 icon: const Icon(Icons.skip_previous),
               ).desire([MusicTheme.action]),
               IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.play_arrow),
+                onPressed: handlePlay,
+                icon: AnimatedIcon(
+                  progress: controller.view,
+                  icon: AnimatedIcons.play_pause,
+                ),
               ) //
                   .desire([MusicTheme.action]) //
                   .desirable([
@@ -145,6 +225,9 @@ class Music extends StatelessWidget {
                 child: child,
               )
         ])
-          ..use([fr.px(16), fr.bg(MusicTheme.accent)]));
+          ..use([
+            fr.px(16),
+            fr.bg(MusicTheme.accent),
+          ]));
   }
 }

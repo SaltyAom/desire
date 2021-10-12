@@ -59,15 +59,19 @@ class MusicTheme {
     color: Colors.grey.shade300,
   );
 
-  static SliderTheme slider(BuildContext context, Widget child) => SliderTheme(
-        data: SliderTheme.of(context).copyWith(
-          trackHeight: 2,
-          thumbShape: const RoundSliderThumbShape(
-            elevation: 0,
-            enabledThumbRadius: 6,
-            // pressedElevation: 8,
-          ),
-        ),
-        child: child,
-      );
+  static final slider = SliderTheme(
+    child: Slider(
+      value: 0,
+      onChanged: null,
+      activeColor: Colors.white,
+      inactiveColor: Colors.white.withOpacity(.5),
+    ),
+    data: const SliderThemeData(
+      trackHeight: 2,
+      thumbShape: RoundSliderThumbShape(
+        elevation: 0,
+        enabledThumbRadius: 6,
+      ),
+    ),
+  );
 }
